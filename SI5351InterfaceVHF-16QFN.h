@@ -45,6 +45,14 @@ enum DriveAmp
   DRIVE_8ma,
 };
 
+void Reg_write_error(const char* location, int regStatus)
+{
+  #ifdef DEBUG
+    Serial.println(location);
+    Serial.println((int)regStatus);
+  #endif
+}
+
 void Set_drive(DriveAmp amps)
 {
 
@@ -66,8 +74,7 @@ si5351b_revb_register_t DriveApmRegisters[3][2] =
     uint8_t regStatus = si5351.si5351_write(DriveApmRegisters[amps][i].address, DriveApmRegisters[amps][i].value);
     if (regStatus != 0)
     {
-      Serial.print(" XXX DriveApmRegisters Write error Set_drive ");
-      Serial.println((int)regStatus);
+      Reg_write_error(" XXX Drive Amp Registers Write error Set_drive ", regStatus);
     }
 
     delay(1);
@@ -131,10 +138,11 @@ void VHF_init()
   for (int i = 0; i < num_reg; i++)
   {
     uint8_t regStatus = si5351.si5351_write(si5351b_revb_registers[i].address, si5351b_revb_registers[i].value);
+    regStatus = 1;
+    
     if (regStatus != 0)
     {
-      Serial.print(" XXX Register Write error VHF_init ");
-      Serial.println((int)regStatus);
+      Reg_write_error(" XXX Register Write error VHF_init ", regStatus);
     }
 
     delay(1);
@@ -263,8 +271,7 @@ void Set_frequency(APRSFreqs Frequency)
     uint8_t regStatus = si5351.si5351_write(APRSFreqRegisters[Frequency][i].address, APRSFreqRegisters[Frequency][i].value);
     if (regStatus != 0)
     {
-      Serial.print(" XXX APRSFreqRegisters Write error Set_ frequency ");
-      Serial.println((int)regStatus);
+      Reg_write_error(" XXX APRSFreqRegisters Write error Set_ frequency  ", regStatus);
     }
   }
 
@@ -275,7 +282,6 @@ void Set_frequency(APRSFreqs Frequency)
 
   void VHF_off()
   { // turn the power off for clk2&3
-    Serial.println("VHF Off");
     uint8_t regStatus = si5351.si5351_write(0x0003, 0xA0);
   }
 
@@ -299,6 +305,7 @@ void Set_frequency(APRSFreqs Frequency)
     si5351.output_enable(XMIT_CLK0, 1); // enable the output
     si5351.output_enable(XMIT_CLK1, 1);
     delay(2);
+    POUTPUTLN((F(" APRS ON ")));
   }
 
   void transmitAPRS(int MODE)
@@ -319,5 +326,5 @@ void Set_frequency(APRSFreqs Frequency)
     digitalWrite(VXCO_PIN, LOW);
     VHF_off();
 
-    //POUTPUTLN((F(" APRSon end ")));
+    POUTPUTLN((F(" APRS OFF ")));
   }

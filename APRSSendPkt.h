@@ -469,13 +469,14 @@ void set_io(void)
 
 void print_code_version(void)
 {
+  #ifdef DEBUG
   Serial.println(" ");
   Serial.print("Sketch:   ");
   Serial.println(__FILE__);
   Serial.print("Uploaded: ");
   Serial.println(__DATE__);
   Serial.println(" ");
-
+  #endif
 }
 
 void print_debug(int type, int dest_type)
@@ -489,6 +490,7 @@ void print_debug(int type, int dest_type)
    * call-N>APRS,DIGIn-N:<PAYLOAD STRING> <CR><LF>
    */
   /****** MYCALL ********/
+  #ifdef DEBUG
   Serial.print(call);
   Serial.print('-');
   Serial.print(myssid, DEC);
@@ -561,4 +563,5 @@ void print_debug(int type, int dest_type)
   }
 
   Serial.println(' ');
+  #endif
 }

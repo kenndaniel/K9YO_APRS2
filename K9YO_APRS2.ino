@@ -1,5 +1,6 @@
 /*
  *  Copyright (C) 2018 - Handiko Gesang - www.github.com/handiko
+ *  Modified and adapted for ballooons by Ken Daniel - www.github.com/kenndaniel
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +19,8 @@
 #include <math.h>
 #include <stdio.h>
 
-#define DEBUG
+#include "config.h"
+
 #ifdef DEBUG
 #define POUTPUT(x) Serial.print x
 #else
@@ -31,7 +33,7 @@
 #define POUTPUTLN(x)
 #endif
 
-#include "config.h"
+
 // Defines the Output Pin for the Voltage controlled oscillator
 // #define VXCO_PIN 9 /// ProMini
 #define VXCO_PIN 3 // SAMD21 pin
@@ -51,8 +53,12 @@ Si5351 si5351;
 const char *mycall = call;
 
 // Chicago
-float latitude = 43.283375;
-float longitude = -87.843936;
+// float latitude = 43.283375;
+// float longitude = -87.843936;
+
+// Berlin
+float latitude = 13.40;
+float longitude = 52.52;
 
 /*
 APRS requires data in a particular format.  This function uses several functions to put the data
@@ -64,10 +70,13 @@ to the APRS format.
 */
 bool APRSBegin()
 {
+  // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
   APRSDataInit('B');
-
   APRSSensorInfoInit();
   APRSSetSensorInfo(-5, -5.24, 250.23, 6, 23, 8, 4); // cpu Temp, Temp, pressure, number of satellites, year, month, day
+  
+  // Example of how to add a string of information to the data porting of a messate
+/* 
   APRSDataInit('B');
   char loc[] = "EN62ag";
   for (int i = 0; i < 5; ++i)
@@ -75,8 +84,9 @@ bool APRSBegin()
     APRSDataAppendInt(i * 7);
     APRSDataAppendChars(loc);
     APRSDataAppendFloat(3.14159);
-  }
+  } */
 
+// course in deg clockwise from N, speed in knots, altitude in ft
   APRSSetCourseSpeedAltitude(9, 1, 2000);
   APRSSetTime(1, 5, 6); // hr min sec
   APRSLatLong(latitude, longitude);
@@ -90,8 +100,8 @@ bool APRSBegin()
 
 int ucount = 0;
 float radius = .05;
-float latitude0 = 42.283375;
-float longitude0 = -87.963936;
+float latitude0 = latitude;
+float longitude0 = longitude;
 void updateLatLon()
 {
   /* Test function to fly a fake balloon in a circle around latitude0 and longitude0 */
@@ -99,11 +109,11 @@ void updateLatLon()
   float dlon = sin(2 * 3.1416 * ucount / 20.) * radius;
   float dlat = cos(2 * 3.1416 * ucount / 20.) * radius;
   // Serial.println(" dlat dlon");
-  Serial.print(ucount);
-  Serial.print(" ");
-  Serial.print(dlat);
-  Serial.print(" ");
-  Serial.println(dlon);
+  POUTPUT((ucount));
+  POUTPUT((" "));
+  POUTPUT((dlat));
+  POUTPUT((" "));
+  POUTPUTLN((dlon));
   latitude = latitude0 + dlat + .015;
   longitude = longitude0 + dlon;
   ++ucount;
@@ -116,15 +126,15 @@ void setup()
   Wire.begin();
 
   set_io();
-  Serial.println(" Starting ");
+  POUTPUTLN((" Starting "));
   print_code_version();
   bool OK_to_transmit = APRSBegin();
   if (OK_to_transmit == false)
-    Serial.println("APRS_Not_OK");
+    POUTPUTLN(("APRS_Not_OK"));
   else
-    Serial.println("APRS is OK");
-  Serial.print("GEO Frequency ");
-  Serial.println((int)(GEOFENCE_APRS_frequency / 1000));
+    POUTPUTLN(("APRS is OK"));
+  POUTPUT(("GEO Frequency "));
+  POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
   // APRSAlternateFrequency();
 }
@@ -133,11 +143,12 @@ int altitude = 2000;
 
 void loop()
 {
-  // Serial.println(" Starting Loop ");
+  // POUTPUTLN(" Starting Loop ");
  int ifreq = F14445;
   {
     // i2cdetect();
-    Serial.println(ifreq);
+    POUTPUTLN((" Frequency"));
+    POUTPUTLN((ifreq));
     //transmit_test();
     GEOFENCE_Freq = (APRSFreqs)ifreq;
     print_debug(_FIXPOS_STATUS, _NORMAL);
@@ -156,13 +167,13 @@ void loop()
     APRSSetCourseSpeedAltitude(9, 1, altitude);
     print_debug(_BALLOON, _BALLOON);
     send_packet(_BALLOON, _BALLOON);
-    delay(6000);
+    delay(18000);
   }
 }
 
 void transmit_test(void)
 {
-  Serial.println("Transmit Test");
+  POUTPUTLN(("Transmit Test"));
   APRSon();
   for (int i = 0; i < 10; ++i)
   {
