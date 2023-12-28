@@ -46,7 +46,7 @@ enum DriveAmp
 
 void Reg_write_error(char* location, int regStatus)
 (
-  #ifdef Debug
+  #ifdef DEBUG
     Serial.print(location);
     Serial.println((int)regStatus);
   #endif
@@ -220,9 +220,11 @@ void VHF_init()
   for (int i = 0; i < num_reg; i++)
   {
     uint8_t regStatus = si5351.si5351_write(si5351b_revb_registers[i].address, si5351b_revb_registers[i].value);
-    regStatus =1;
+
     if (regStatus != 0)
-          Reg_write_error("  XXX Register Write error  ", regStatus);
+    {
+        Reg_write_error("  XXX Register Write error  ", regStatus);
+    }
  
 
     delay(1);

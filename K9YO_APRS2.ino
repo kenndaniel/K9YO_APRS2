@@ -144,29 +144,29 @@ int altitude = 2000;
 void loop()
 {
   // POUTPUTLN(" Starting Loop ");
- int ifreq = F14445;
+ //int ifreq = F14445;
   {
     // i2cdetect();
-    POUTPUTLN((" Frequency"));
-    POUTPUTLN((ifreq));
+    //POUTPUTLN((" Frequency"));
+    //POUTPUTLN((ifreq));
     //transmit_test();
-    GEOFENCE_Freq = (APRSFreqs)ifreq;
+    //GEOFENCE_Freq = (APRSFreqs)ifreq;
     print_debug(_FIXPOS_STATUS, _NORMAL);
     send_packet(_FIXPOS_STATUS, _BEACON);
     delay(100);
-    print_debug(_FIXPOS_STATUS, _BEACON);
-    send_packet(_BEACON, _NORMAL);
-    delay(100);
-    print_debug(_STATUS, _NORMAL);
-    send_packet(_STATUS, _NORMAL);
-    delay(100);
-    print_debug(_DATA, _NORMAL);
-    send_packet(_DATA, _NORMAL);
-    delay(100);
-    APRSLatLong(latitude, longitude);
-    APRSSetCourseSpeedAltitude(9, 1, altitude);
-    print_debug(_BALLOON, _BALLOON);
-    send_packet(_BALLOON, _BALLOON);
+    // print_debug(_FIXPOS_STATUS, _BEACON);
+    // send_packet(_BEACON, _NORMAL);
+    // delay(100);
+    // print_debug(_STATUS, _NORMAL);
+    // send_packet(_STATUS, _NORMAL);
+    // delay(100);
+    // print_debug(_DATA, _NORMAL);
+    // send_packet(_DATA, _NORMAL);
+    // delay(100);
+    // APRSLatLong(latitude, longitude);
+    // APRSSetCourseSpeedAltitude(9, 1, altitude);
+    // print_debug(_BALLOON, _BALLOON);
+    // send_packet(_BALLOON, _BALLOON);
     delay(18000);
   }
 }
