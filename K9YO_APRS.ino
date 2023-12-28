@@ -41,6 +41,8 @@
 //#include <si5351.h> // include this for QFN20
 #include "src/si5351-16QFN.h"  // include this for QFN16
 Si5351 si5351;
+//#include "GEOFrequencies20QFN.h"
+#include "GEOFrequencies16QFN.h"
 //#include "SI5351InterfaceVHF-20QFN.h"
 #include "SI5351InterfaceVHF-16QFN.h"
 #include "geofence.h"
