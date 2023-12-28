@@ -1,6 +1,6 @@
 /*
    Low level functions that perform the final message encoding and interface with the SI5351 Transmitter
-
+   All register settings assume a 27MHz clock
  */
 
 // unsigned long long freqAPRSTest = APRS_DEBUG_FREQ;
