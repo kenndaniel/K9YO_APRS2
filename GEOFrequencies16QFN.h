@@ -1,4 +1,6 @@
 	
+// For 27MHz TXCO
+
 enum DriveAmp {ma4, ma6, ma8};	
 
 DriveApmRegisters[3][2][2] =
