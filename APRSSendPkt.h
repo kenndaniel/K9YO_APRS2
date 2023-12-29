@@ -108,6 +108,8 @@ void set_io(void);
 void print_code_version(void);
 void print_debug(char type, char dest_type);
 
+
+
 /*
  *
  */
@@ -564,4 +566,28 @@ void print_debug(int type, int dest_type)
 
   Serial.println(' ');
   #endif
+}
+
+
+
+int ucount = 0;
+float radius = .05;
+float latitude0 = latitude;
+float longitude0 = longitude;
+void Simulate_flight()
+{
+  /* Test function to fly a fake balloon in a circle around latitude0 and longitude0 */
+
+  float dlon = sin(2 * 3.1416 * ucount / 20.) * radius;
+  float dlat = cos(2 * 3.1416 * ucount / 20.) * radius;
+  // Serial.println(" dlat dlon");
+  POUTPUT((ucount));
+  POUTPUT((" "));
+  POUTPUT((dlat));
+  POUTPUT((" "));
+  POUTPUTLN((dlon));
+  latitude = latitude0 + dlat + .015;
+  longitude = longitude0 + dlon;
+  ++ucount;
+  radius += .001;
 }
