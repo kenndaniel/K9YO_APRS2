@@ -85,11 +85,9 @@ void APRSSetSensorInfo(int iTxC,float fC,float fhPa,int iS,int iY,int iM,int iD)
   String C = "C";
   String hPa = "hPa";
   String S = "S";
-  String Y = "Y";
-  String M = "M";
-  String D = "D";
   String sp = " ";
   String p = ".";
+  String dash = "-";
   String sData;
   String siC;
   siC = (String)(iTxC);
@@ -100,7 +98,7 @@ void APRSSetSensorInfo(int iTxC,float fC,float fhPa,int iS,int iY,int iM,int iD)
   int idhPa = (fhPa - ihPa)*100;
   String shPa = (String)ihPa+(String)p+(String)idhPa;
 
-  sData = sp+(String)iTxC+TxC+sp+sC+C+sp+shPa+hPa+sp+(String)iS+S+sp+(String)iY+Y+sp+(String)iM+M+sp+(String)iD+D;
+  sData = sp+(String)iTxC+TxC+sp+sC+C+sp+shPa+hPa+sp+(String)iS+S+sp+(String)iY+dash+(String)iM+dash+(String)iD;
   strncpy(APRSinfo, sData.c_str(),100);
 
 }

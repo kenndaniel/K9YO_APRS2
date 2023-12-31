@@ -23,7 +23,8 @@ enum APRSFreqs // world wide APRS frequencies
   F14466,
   F14462,
   F145175,
-  F144575
+  F144575,
+  F0000
 };
 
 // set in geofence.h
@@ -277,12 +278,19 @@ void Set_frequency(APRSFreqs Frequency)
   return;
 }
 
-bool SetTo14445 = false;
-void SetFrequency14445()
+bool override_flag = false;
+APRSFreqs override_frequency = F14445;  // default override
+
+void SetOverrideFrequency(APRSFreqs freq)
 { // This frequency is not used by any country
   // Potentially used for picture downloads
-  Set_frequency(F14445);
-  SetTo14445 = true;
+  // The ovrride only stays in effect for one message
+  // Following messages will revert to the GEO frequency unless 
+  // this function is called again
+  Serial.print(" SetFrequency");
+  Serial.println(freq);
+  override_frequency = freq;
+  override_flag = true;
 }
 
 void VHF_off()
@@ -298,11 +306,15 @@ void VHF_on()
 
   VHF_init();
   Set_drive(DRIVE_6ma);
-  if (SetTo14445 == false)
+  if (override_flag == true)
+  {
+    Set_frequency(override_frequency); 
+    override_flag = false; // set in SetOverrideFrequency
+  }
+  else
   {
     Set_frequency(GEOFENCE_Freq); // set in geofence.h
   }
-  SetTo14445 = false;  // set in SetFrequency14445
 }
 
 void APRSon()
