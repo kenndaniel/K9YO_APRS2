@@ -47,11 +47,11 @@ float longitude = -87.963936;  // required for POSITION
 //#include <i2cdetect.h>
 #include <TimeLib.h>
 
-
+char loc6[7] ="EN62ag"; // Used only in status string -- not required
 #include "APRSLoop.h"
 
-const char *mycall = call;
-char loc6[7] "EN62ag"; // Used only in status string -- not required
+const char *mycall = call;  // required
+
 void setup()
 {
   delay(7000);  // This is needed 
@@ -61,7 +61,6 @@ void setup()
   POUTPUTLN((" Starting "));
   print_code_version();
  
-   loc6[] = 
   // Initialize the cpu time for testing
   // hr, min, sec, day, month, year
     setTime( 8, 30, 45, 30, 30, 2023);
@@ -79,7 +78,7 @@ void loop()
     //POUTPUTLN((" Frequency"));
     //POUTPUTLN((ifreq));
     //transmit_test();
-    SendPackets();
+    SendAPRSPackets();
 
   }
 }

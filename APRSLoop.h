@@ -51,7 +51,7 @@ bool APRSBegin()
     return true;
 }
 
-void SendPackets()
+void SendAPRSPackets()
 {
     // transmit_test();
     bool OK_to_transmit = APRSBegin();
