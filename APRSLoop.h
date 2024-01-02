@@ -22,20 +22,19 @@ to the APRS format.
 bool APRSBegin()
 {
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
-    APRSDataInit('B');
     APRSSensorInfoInit();
     APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day()); // cpu Temp, Temp, pressure, number of satellites, year, month, day
 
     // Example of how to add a string of information to the data porting of a messate
-    /*
-      APRSDataInit('B');
-      char loc[] = "EN62ag";
-      for (int i = 0; i < 5; ++i)
-      {
+
+    APRSDataInit('B');
+    char loc[] = "EN62ag";
+    for (int i = 0; i < 3; ++i)
+    {
         APRSDataAppendInt(i * 7);
         APRSDataAppendChars(loc);
         APRSDataAppendFloat(3.14159);
-      } */
+    }
 
     // course in deg clockwise from N, speed in knots, altitude in ft
     APRSSetCourseSpeedAltitude(9, 1, 2000);
@@ -60,20 +59,20 @@ void SendPackets()
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
     SetOverrideFrequency(F144575);
-    print_debug(_FIXPOS_STATUS, _NORMAL);
-    send_packet(_FIXPOS_STATUS, _BEACON);
+    print_debug(_POSITION_STATUS, _BEACON);
+    send_packet(_POSITION_STATUS, _BEACON);
     delay(100);
-    // print_debug(_FIXPOS_STATUS, _BEACON);
-    // send_packet(_BEACON, _NORMAL);
-    // delay(100);
-    // print_debug(_STATUS, _NORMAL);
-    // send_packet(_STATUS, _NORMAL);
-    // delay(100);
-    // print_debug(_DATA, _NORMAL);
-    // send_packet(_DATA, _NORMAL);
-    // delay(100);
-    // print_debug(_BALLOON, _BALLOON);
-    // send_packet(_BALLOON, _BALLOON);
+    print_debug(_POSITION_STATUS, _BEACON);
+    send_packet(_BEACON, _NORMAL);
+    delay(100);
+    print_debug(_STATUS, _NORMAL);
+    send_packet(_STATUS, _NORMAL);
+    delay(100);
+    print_debug(_DATA, _NORMAL);
+    send_packet(_DATA, _NORMAL);
+    delay(100);
+    print_debug(_BALLOON, _INFO);
+    send_packet(_BALLOON, _INFO);
 
     delay(15000);
 }
