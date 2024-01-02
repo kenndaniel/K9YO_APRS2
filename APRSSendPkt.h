@@ -13,22 +13,21 @@ const char *dest = "APX783";  // Experimantal packet APXxxx  (xxx any number) _N
 #define _PID 0xf0
 #define _DT_EXP ','
 #define _DT_STATUS '>'
-#define _DT__POSITION '!'
+#define _DT_POS '!'
 #define _DT_DATA '{'
 #define _DT_AT '@'
 
 #define _NORMAL 1   // sends dest as destination 
 #define _BEACON 2  // Sends dest_beacon as destination
 
-#define _POSITION 1  // Sends only position information
+#define _FIXPOS 1  // Sends only position information
 #define _STATUS 2  // Sends only status information
-#define _POSITION_STATUS 3  // Sends position and status infomaton
+#define _FIXPOS_STATUS 3  // Sends position and status infomaton
 #define _DATA 4  // Sends only data
 
 // Standard balloon spot - simulates qrplabs APRSLite tracker for Soundhub
 // Sends dest_balloon in destination position
 #define _BALLOON  5   
-#define _INFO 5
 
 bool nada = _2400;
 
@@ -108,6 +107,8 @@ void send_payload(char type);
 void set_io(void);
 void print_code_version(void);
 void print_debug(char type, char dest_type);
+
+
 
 /*
  *
@@ -285,7 +286,7 @@ void send_payload(char type)
    * LON        : dddmm.ssE or dddmm.ssW
    * STATUS TEXT: Free form text
    *
-   * TYPE : INFO POSITION & STATUS
+   * TYPE : EXTENDED POSITION & STATUS
    * "089/033/A=001234";   course in deg / speed in knots /A= altitude in feet
    * ..............................................................................
    * |DATA TYPE |    LAT   |SYMB. OVL.|    LON   |SYMB. TBL.|COURSE| 
@@ -326,9 +327,9 @@ void send_payload(char type)
    * All of the data are sent in the form of ASCII Text, not shifted.
    *
    */
-  if (type == _POSITION)
+  if (type == _FIXPOS)
   {
-    send_char_NRZI(_DT__POSITION, HIGH);
+    send_char_NRZI(_DT_POS, HIGH);
     send_string_len(lat, strlen(lat));
     send_char_NRZI(sym_ovl, HIGH);
     send_string_len(lon, strlen(lon));
@@ -339,9 +340,9 @@ void send_payload(char type)
     send_char_NRZI(_DT_STATUS, HIGH);
     send_string_len(mystatus, strlen(mystatus));
   }
-  else if (type == _POSITION_STATUS)
+  else if (type == _FIXPOS_STATUS)
   {
-    send_char_NRZI(_DT__POSITION, HIGH); 
+    send_char_NRZI(_DT_POS, HIGH); 
     send_string_len(lat, strlen(lat));
     send_char_NRZI(sym_ovl, HIGH);
     send_string_len(lon, strlen(lon));
@@ -349,7 +350,7 @@ void send_payload(char type)
     send_char_NRZI(' ', HIGH);
     send_string_len(mystatus, strlen(mystatus));
   }
-  else if (type == _INFO)
+  else if (type == _BALLOON)
   {
     send_char_NRZI(_DT_AT, HIGH);
     send_string_len(cTime, strlen(cTime));   
@@ -443,6 +444,8 @@ void send_flag(unsigned char flag_len)
 void send_packet(char packet_type, char dest_type)
 {
   digitalWrite(LED_BUILTIN, 1);
+
+
   APRSon();
   send_flag(_FLAG); 
   crc = 0xffff;
@@ -453,6 +456,7 @@ void send_packet(char packet_type, char dest_type)
   APRSoff();
   digitalWrite(LED_BUILTIN, 0);
 }
+
 
 
 /*
@@ -516,9 +520,9 @@ void print_debug(int type, int dest_type)
   Serial.print(':');
 
   /******* PAYLOAD ******/
-  if (type == _POSITION)
+  if (type == _FIXPOS)
   {
-    Serial.print(_DT__POSITION);
+    Serial.print(_DT_POS);
     Serial.print(lat);
     Serial.print(sym_ovl);
     Serial.print(lon);
@@ -529,9 +533,9 @@ void print_debug(int type, int dest_type)
     Serial.print(_DT_STATUS);
     Serial.print(mystatus);
   }
-  else if (type == _POSITION_STATUS)
+  else if (type == _FIXPOS_STATUS)
   {
-    Serial.print(_DT__POSITION);
+    Serial.print(_DT_POS);
     Serial.print(lat);
     Serial.print(sym_ovl);
     Serial.print(lon);
@@ -540,7 +544,7 @@ void print_debug(int type, int dest_type)
     Serial.print(' ');
     Serial.print(mystatus);
   }
-    else if (type == _INFO)
+    else if (type == _BALLOON)
   {
     Serial.print(_DT_AT);
     Serial.print(cTime);

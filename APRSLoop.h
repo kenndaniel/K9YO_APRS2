@@ -22,23 +22,26 @@ to the APRS format.
 bool APRSBegin()
 {
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
+    APRSDataInit('B');
     APRSSensorInfoInit();
     APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day()); // cpu Temp, Temp, pressure, number of satellites, year, month, day
 
     // Example of how to add a string of information to the data porting of a messate
-
-    APRSDataInit('B');
-    char loc[] = "EN62ag";
-    for (int i = 0; i < 3; ++i)
-    {
+    
+      APRSDataInit('B');  // Third character in data string used to identify the type of body 
+      // Various different bodies can be sent by the tracker using different third characters
+      // Typocally this type of body is not displayed by aprs.fi.  It needs to be forwarded to an iGate
+      for (int i = 0; i < 5; ++i)
+      {
+        // Build the data body with a comma delimited items
         APRSDataAppendInt(i * 7);
-        APRSDataAppendChars(loc);
+        APRSDataAppendChars(loc6);
         APRSDataAppendFloat(3.14159);
-    }
+      } 
 
     // course in deg clockwise from N, speed in knots, altitude in ft
     APRSSetCourseSpeedAltitude(9, 1, 2000);
-    APRSSetTime((int)hour(), (int)minute(), (int)second()); // hr min sec
+    APRSFormatTime((int)hour(), (int)minute(), (int)second()); // hr min sec
     APRSLatLong(latitude, longitude);
     // Checks if it is ok to transmit in this location - If yes it GEOFENCE_Freq which sets the transmit frequency
     GEOFENCE_position(latitude, longitude);
@@ -50,6 +53,7 @@ bool APRSBegin()
 
 void SendPackets()
 {
+    // transmit_test();
     bool OK_to_transmit = APRSBegin();
     if (OK_to_transmit == false)
         POUTPUTLN(F("APRS_Not_OK"));
@@ -58,23 +62,23 @@ void SendPackets()
     POUTPUT(F("GEO Frequency "));
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
-    SetOverrideFrequency(F144575);
-    print_debug(_POSITION_STATUS, _BEACON);
-    send_packet(_POSITION_STATUS, _BEACON);
-    delay(100);
-    print_debug(_POSITION_STATUS, _BEACON);
-    send_packet(_BEACON, _NORMAL);
-    delay(100);
+    SetOverrideFrequency(F14445);
+    print_debug(_FIXPOS_STATUS, _BEACON);
+    send_packet(_FIXPOS_STATUS, _BEACON);
+    delay(10000);
+    print_debug(_FIXPOS_STATUS, _NORMAL);
+    send_packet(_FIXPOS_STATUS, _NORMAL);
+    delay(10000);
     print_debug(_STATUS, _NORMAL);
     send_packet(_STATUS, _NORMAL);
-    delay(100);
+    delay(15000);
     print_debug(_DATA, _NORMAL);
     send_packet(_DATA, _NORMAL);
-    delay(100);
-    print_debug(_BALLOON, _INFO);
-    send_packet(_BALLOON, _INFO);
+    delay(10000);
+    print_debug(_BALLOON, _BALLOON);
+    send_packet(_BALLOON, _BALLOON);
 
-    delay(15000);
+    delay(70000);
 }
 
 void transmit_test(void)

@@ -156,7 +156,8 @@ void Set_frequency(APRSFreqs Frequency)
   si5351b_revb_register_t APRSFreqRegisters[12][num_reg] =
       // si5351-16QFN does not propely set frequency.  Consequently regs are set manually
       // Register values for Clock 2 and 3(inverted)
-      // 144.45 Picture Download and test frequency
+
+      // 144.45 Picture Download and test frequency. It is not used by any country
       {{{0x0022, 0x42},
         {0x0023, 0x40},
         {0x0026, 0x0C},
@@ -165,7 +166,7 @@ void Set_frequency(APRSFreqs Frequency)
         {0x0029, 0x00},
         {0x00A2, 0x05}},
 
-       // 144.80
+       // 144.80  See geofence.h
        {{0x0022, 0x42},
         {0x0023, 0x63},
         {0x0026, 0x16},
@@ -305,7 +306,7 @@ void VHF_on()
   digitalWrite(VXCO_PIN, LOW);
 
   VHF_init();
-  Set_drive(DRIVE_6ma);
+  Set_drive(DRIVE_8ma);
   if (override_flag == true)
   {
     Set_frequency(override_frequency); 

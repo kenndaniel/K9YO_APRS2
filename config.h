@@ -25,5 +25,5 @@ const char call[] = "K9YO";     // Amateur callsign
 //
 #define DEBUG // Debug output is generated if DEBUG is defined
 
-#define APRS_SID  11
+#define APRS_SID  6
 #define VCXO_GAIN 52 // 45 should be ok - Adjustment of the difference between the low and high tone frequencies 9-9.5MHz Critical

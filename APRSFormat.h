@@ -52,7 +52,7 @@ void padTwoDig(int value,char cvalue[])
   return;
 }
 char cTime[]="000000h";
-void APRSSetTime(int hrs, int min, int sec)
+void APRSFormatTime(int hrs, int min, int sec)
 { // HHMMSShLAT
 
   char MMM[]="00";
@@ -75,6 +75,7 @@ char APRSinfo[101];
 void APRSSensorInfoInit()
 {
   APRSinfo[0] = '\0';
+  
 }
 
 void APRSSetSensorInfo(int iTxC,float fC,float fhPa,int iS,int iY,int iM,int iD) 

@@ -35,12 +35,12 @@
 
 // Lat long for testing 
 // Chicago
-// float latitude = 43.283375;
-// float longitude = -87.843936;
+float latitude = 42.283375;  // required for POSITION
+float longitude = -87.963936;  // required for POSITION
 
 // Berlin
-float latitude = 52.52;
-float longitude = 13.40; 
+//float latitude = 52.52;
+//float longitude = 13.40; 
 
 
 #include <Wire.h>
@@ -51,7 +51,7 @@ float longitude = 13.40;
 #include "APRSLoop.h"
 
 const char *mycall = call;
-
+char loc6[7] "EN62ag"; // Used only in status string -- not required
 void setup()
 {
   delay(7000);  // This is needed 
@@ -60,15 +60,9 @@ void setup()
   set_io();
   POUTPUTLN((" Starting "));
   print_code_version();
-  bool OK_to_transmit = APRSBegin();
-  if (OK_to_transmit == false)
-    POUTPUTLN(("APRS_Not_OK"));
-  else
-    POUTPUTLN(("APRS is OK"));
-  POUTPUT(("GEO Frequency "));
-  POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
-
-  // Initialize the cpu time
+ 
+   loc6[] = 
+  // Initialize the cpu time for testing
   // hr, min, sec, day, month, year
     setTime( 8, 30, 45, 30, 30, 2023);
 
