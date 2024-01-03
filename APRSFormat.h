@@ -18,6 +18,7 @@ char lon[] = "10000.00W  ";  // place holder
 const int LATITUDE =2;
 
 
+
 void padThreeDig(int value, char cvalue[])
 { // Prepend 0 if there is only one or two digits.
   String str;
@@ -148,7 +149,7 @@ bool APRSDataAppendFloat(float value)
 {  // Append a char string to the end of the data string.
   String str = (String)value;
   str = (String)APRSdata + (String)"," + str;
-  if (str.length() > 255) return false;
+  if (str.length() > 250) return false;
   strcpy(APRSdata, str.c_str());
   return true;
 }
@@ -157,7 +158,7 @@ bool APRSDataAppendInt(int value)
 {  // Append a char string to the end of the APRSdata string.
   String str = (String)value;
   str = (String)APRSdata + (String)"," + str;
-  if (str.length() > 255) return false;
+  if (str.length() > 250) return false;
   strcpy(APRSdata, str.c_str());
   return true;
 
@@ -167,7 +168,7 @@ bool APRSDataAppendChars(char* value)
 {  // Append a char string to the end of the APRSdata string.
   String str = (String)value;
   str = (String)APRSdata + (String)"," + str;
-  if (str.length() > 255) return false;
+  if (str.length() > 250) return false;
 
   strcpy(APRSdata, str.c_str());
   return true;
