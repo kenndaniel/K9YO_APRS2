@@ -62,12 +62,12 @@ void SendAPRSPackets()
     POUTPUT(F("GEO Frequency "));
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
-    SetOverrideFrequency(F14445);
-    print_debug(_BEACON, _FIXPOS_STATUS);
-    send_packet(_BEACON, _FIXPOS_STATUS);
+    //SetOverrideFrequency(F14445);  // Frequency not used by any country
+    print_debug(_BEACON, _POSITION_STATUS);
+    send_packet(_BEACON, _POSITION_STATUS);
     delay(10000);
-    print_debug(_NORMAL, _FIXPOS_STATUS);
-    send_packet(_NORMAL, _FIXPOS_STATUS);
+    print_debug(_NORMAL, _POSITION_STATUS);
+    send_packet(_NORMAL, _POSITION_STATUS);
     delay(10000);
     print_debug(_NORMAL, _STATUS);
     send_packet(_NORMAL, _STATUS);

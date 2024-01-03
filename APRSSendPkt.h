@@ -20,9 +20,9 @@ const char *dest = "APX783";  // Experimantal packet APXxxx  (xxx any number) _N
 #define _NORMAL 1   // sends dest as destination 
 #define _BEACON 2  // Sends dest_beacon as destination
 
-#define _FIXPOS 1  // Sends only position information
+#define _POSITION 1  // Sends only position information
 #define _STATUS 2  // Sends only status information
-#define _FIXPOS_STATUS 3  // Sends position and status infomaton
+#define _POSITION_STATUS 3  // Sends position and status infomaton
 #define _DATA 4  // Sends only data
 
 // Standard balloon spot - simulates qrplabs APRSLite tracker for Soundhub
@@ -327,7 +327,7 @@ void send_payload(char type)
    * All of the data are sent in the form of ASCII Text, not shifted.
    *
    */
-  if (type == _FIXPOS)
+  if (type == _POSITION)
   {
     send_char_NRZI(_DT_POS, HIGH);
     send_string_len(lat, strlen(lat));
@@ -340,7 +340,7 @@ void send_payload(char type)
     send_char_NRZI(_DT_STATUS, HIGH);
     send_string_len(mystatus, strlen(mystatus));
   }
-  else if (type == _FIXPOS_STATUS)
+  else if (type == _POSITION_STATUS)
   {
     send_char_NRZI(_DT_POS, HIGH); 
     send_string_len(lat, strlen(lat));
@@ -520,7 +520,7 @@ void print_debug( int dest_type, int type)
   Serial.print(':');
 
   /******* PAYLOAD ******/
-  if (type == _FIXPOS)
+  if (type == _POSITION)
   {
     Serial.print(_DT_POS);
     Serial.print(lat);
@@ -533,7 +533,7 @@ void print_debug( int dest_type, int type)
     Serial.print(_DT_STATUS);
     Serial.print(mystatus);
   }
-  else if (type == _FIXPOS_STATUS)
+  else if (type == _POSITION_STATUS)
   {
     Serial.print(_DT_POS);
     Serial.print(lat);
