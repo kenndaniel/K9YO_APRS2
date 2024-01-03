@@ -83,8 +83,6 @@ unsigned int str_len = 400;
 char bit_stuff = 0;
 unsigned short crc = 0xffff;
 
-//const char *mystatus = "Hello World This is an tiny Arduino tracker!";
-const char *mystatus = "Arduino Tracker by K9YO";  // course in deg / speed in knots /A= altitude in feet
 
 /*
  *
@@ -433,7 +431,7 @@ void send_flag(unsigned char flag_len)
    * ........................................................
    * |  FLAG(s) |  HEADER  | PAYLOAD  | FCS(CRC) |  FLAG(s) |
    * --------------------------------------------------------
-   * |  N bytes | 22 bytes |  N bytes | 2 bytes  |  N bytes |
+   * |  1 bytes | 22 bytes |  N bytes | 2 bytes  |  1 bytes |
    * --------------------------------------------------------
    *
    * FLAG(s)  : 0x7e

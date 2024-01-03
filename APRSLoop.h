@@ -21,6 +21,10 @@ to the APRS format.
 */
 bool APRSBegin()
 {
+    // Set status message
+    char status[] = "APRS Tracker by K9YO";
+    APRSSetStatus(status);
+
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
     APRSDataInit('B');
     APRSSensorInfoInit();
