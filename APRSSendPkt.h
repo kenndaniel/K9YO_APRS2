@@ -320,8 +320,8 @@ void send_payload(char type)
    * 
    * DATA TYPE  : {
    * UID        : {
-   * PACKET TYPE : USER DEFINED ASCII PRINTABLE CHARACTER
-   * DATA TEST   : Free from text (ASCII Printable)
+   * PACKET TYPE : USER DEFINED ASCII PRINTABLE CHARACTER e.g. B
+   * DATA TEST   : Free from text (ASCII Printable) N<250
    *
    * 
    * All of the data are sent in the form of ASCII Text, not shifted.
@@ -441,7 +441,7 @@ void send_flag(unsigned char flag_len)
    * PAYLOAD  : 1 byte data type + N byte info
    * FCS      : 2 bytes calculated from HEADER + PAYLOAD
    */
-void send_packet(char packet_type, char dest_type)
+void send_packet( char dest_type , char packet_type )
 {
   digitalWrite(LED_BUILTIN, 1);
 
@@ -481,7 +481,7 @@ void print_code_version(void)
   #endif
 }
 
-void print_debug(int type, int dest_type)
+void print_debug( int dest_type, int type)
 {
   /*
    * PROTOCOL DEBUG.

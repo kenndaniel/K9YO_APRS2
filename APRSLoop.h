@@ -63,17 +63,17 @@ void SendAPRSPackets()
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
     SetOverrideFrequency(F14445);
-    print_debug(_FIXPOS_STATUS, _BEACON);
-    send_packet(_FIXPOS_STATUS, _BEACON);
+    print_debug(_BEACON, _FIXPOS_STATUS);
+    send_packet(_BEACON, _FIXPOS_STATUS);
     delay(10000);
-    print_debug(_FIXPOS_STATUS, _NORMAL);
-    send_packet(_FIXPOS_STATUS, _NORMAL);
+    print_debug(_NORMAL, _FIXPOS_STATUS);
+    send_packet(_NORMAL, _FIXPOS_STATUS);
     delay(10000);
-    print_debug(_STATUS, _NORMAL);
-    send_packet(_STATUS, _NORMAL);
+    print_debug(_NORMAL, _STATUS);
+    send_packet(_NORMAL, _STATUS);
     delay(15000);
-    print_debug(_DATA, _NORMAL);
-    send_packet(_DATA, _NORMAL);
+    print_debug(_NORMAL, _DATA);
+    send_packet(_NORMAL, _DATA);
     delay(10000);
     print_debug(_BALLOON, _BALLOON);
     send_packet(_BALLOON, _BALLOON);
