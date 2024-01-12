@@ -24,19 +24,20 @@ enum APRSFreqs // world wide APRS frequencies
   F14462,
   F145175,
   F144575,
-  F0000
 };
 
 // set in geofence.h
 APRSFreqs GEOFENCE_Freq = F14445;
 unsigned long long GEOFENCE_APRS_frequency = 0;
 
+#ifndef APRS_WSPR
 typedef struct
 {
   unsigned int address; /* 16-bit register address */
   unsigned char value;  /* 8-bit register data */
 
 } si5351b_revb_register_t;
+#endif
 
 enum DriveAmp
 {
@@ -322,6 +323,7 @@ void APRSon()
 {
   // POUTPUTLN((F(" APRSon start ")));
   VHF_on(); // This needs to be done for each transmission.
+  POUTPUTLN((F(" VHF ON ")));
   digitalWrite(VXCO_PIN, LOW);
   si5351.output_enable(XMIT_CLK0, 1); // enable the output
   si5351.output_enable(XMIT_CLK1, 1);
@@ -345,6 +347,7 @@ void transmitAPRS(int MODE)
 void APRSoff()
 {
   digitalWrite(VXCO_PIN, LOW);
+  POUTPUTLN((F(" VHF ON-2 ")));
   VHF_off();
 
   POUTPUTLN((F(" APRS OFF ")));

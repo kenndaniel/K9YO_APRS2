@@ -1,9 +1,12 @@
 
 // Defines the Output Pin for the Voltage controlled oscillator
 #define VXCO_PIN 3 // SAMD21 pin
+
 // #include <si5351.h> // include this for QFN20
 #include "src/si5351-16QFN.h" // include this for QFN16
+#ifndef APRS_WSPR
 Si5351 si5351;
+#endif
 // #include "SI5351InterfaceVHF-20QFN.h"
 #include "SI5351InterfaceVHF-16QFN.h"
 #include "geofence.h"
@@ -26,25 +29,26 @@ bool APRSBegin()
     APRSSetStatus(status);
 
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
-    APRSDataInit('B');
     APRSSensorInfoInit();
-    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day()); // cpu Temp, Temp, pressure, number of satellites, year, month, day
+    // cpu Temp, Temp, pressure, number of satellites, year, month, day
+    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day());
 
     // Example of how to add a string of information to the data porting of a messate
-    
-      APRSDataInit('B');  // Third character in data string used to identify the type of body 
-      // Various different bodies can be sent by the tracker using different third characters
-      // Typocally this type of body is not displayed by aprs.fi.  It needs to be forwarded to an iGate
-      for (int i = 0; i < 5; ++i)
-      {
+
+    APRSDataInit('B'); // Third character in data string used to identify the type of body
+    // Various different bodies can be sent by the tracker using different third characters
+    // Typocally this type of body is not displayed by aprs.fi.  It needs to be forwarded to an iGate
+    for (int i = 0; i < 5; ++i)
+    {
         // Build the data body with a comma delimited items
         APRSDataAppendInt(i * 7);
         APRSDataAppendChars(loc6);
         APRSDataAppendFloat(3.14159);
-      } 
+    }
 
     // course in deg clockwise from N, speed in knots, altitude in ft
-    APRSSetCourseSpeedAltitude(9, 1, 2000);
+
+    APRSSetCourseSpeedAltitude(gpsCourse, gpsSpeed * .5399, gpsAltitude * 3.28);
     APRSFormatTime((int)hour(), (int)minute(), (int)second()); // hr min sec
     APRSLatLong(latitude, longitude);
     // Checks if it is ok to transmit in this location - If yes it GEOFENCE_Freq which sets the transmit frequency
@@ -66,23 +70,26 @@ void SendAPRSPackets()
     POUTPUT(F("GEO Frequency "));
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
-    //SetOverrideFrequency(F14445);  // Frequency not used by any country
-    print_debug(_BEACON, _POSITION_STATUS);
-    send_packet(_BEACON, _POSITION_STATUS);
-    delay(10000);
-    print_debug(_NORMAL, _POSITION_STATUS);
-    send_packet(_NORMAL, _POSITION_STATUS);
-    delay(10000);
-    print_debug(_NORMAL, _STATUS);
-    send_packet(_NORMAL, _STATUS);
-    delay(15000);
-    print_debug(_NORMAL, _DATA);
-    send_packet(_NORMAL, _DATA);
-    delay(10000);
+    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
+    // print_debug(_BEACON, _POSITION_STATUS);
+    // send_packet(_BEACON, _POSITION_STATUS);
+    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
+    // delay(10000);
+    // print_debug(_NORMAL, _POSITION_STATUS);
+    // send_packet(_NORMAL, _POSITION_STATUS);
+    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
+    // delay(10000);
+    //Serial.print(" Free Memory is ");
+    //print_debug(_NORMAL, _STATUS);
+    //send_packet(_NORMAL, _STATUS);
+
+    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
+    // delay(15000);
+    // print_debug(_NORMAL, _DATA);
+    // send_packet(_NORMAL, _DATA);
+    // delay(10000);
     print_debug(_BALLOON, _BALLOON);
     send_packet(_BALLOON, _BALLOON);
-
-    delay(70000);
 }
 
 void transmit_test(void)
