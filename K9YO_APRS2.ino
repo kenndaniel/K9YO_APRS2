@@ -37,7 +37,9 @@
 // Chicago
 float latitude = 42.283375;  // required for POSITION
 float longitude = -87.963936;  // required for POSITION
-
+float gpsSpeed = 10.;
+float gpsCourse =  10.;
+float gpsAltitude = 10.;
 // Berlin
 //float latitude = 52.52;
 //float longitude = 13.40; 
@@ -71,7 +73,7 @@ int altitude = 2000;
 
 void loop()
 {
-  // POUTPUTLN(" Starting Loop ");
+  POUTPUTLN(" Starting Loop ");
  //int ifreq = F14445;
   {
     // i2cdetect();

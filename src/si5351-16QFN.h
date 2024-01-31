@@ -4,7 +4,7 @@
  * This code is derived from https://github.com/etherkit/Si5351Arduino and has 
  * been modifice by Ken Daniel K9YO 2023
  * 
- * The 16QFN package of the SI5351 package has a different register layout
+ * The 16QFN package of the SI5351 has a different register layout
  * than the other package types (see document AN1234).  The only modifications that
  * have been made to the source are changes to the registers that are called an updated.  
  * In all other cases the code is identical to the source. See additional comments in .cpp
