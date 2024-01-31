@@ -26,22 +26,22 @@ bool APRSBegin()
     APRSSetStatus(status);
 
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
-    APRSDataInit('B');
     APRSSensorInfoInit();
-    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day()); // cpu Temp, Temp, pressure, number of satellites, year, month, day
+    // cpu Temp, Temp, pressure, number of satellites, year, month, day
+    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day());
 
     // Example of how to add a string of information to the data porting of a messate
-    
-      APRSDataInit('B');  // Third character in data string used to identify the type of body 
-      // Various different bodies can be sent by the tracker using different third characters
-      // Typocally this type of body is not displayed by aprs.fi.  It needs to be forwarded to an iGate
-      for (int i = 0; i < 5; ++i)
-      {
+
+    APRSDataInit('B'); // Third character in data string used to identify the type of body
+    // Various different bodies can be sent by the tracker using different third characters
+    // Typocally this type of body is not displayed by aprs.fi.  It needs to be forwarded to an iGate
+    for (int i = 0; i < 5; ++i)
+    {
         // Build the data body with a comma delimited items
         APRSDataAppendInt(i * 7);
         APRSDataAppendChars(loc6);
         APRSDataAppendFloat(3.14159);
-      } 
+    }
 
     // course in deg clockwise from N, speed in knots, altitude in ft
     APRSSetCourseSpeedAltitude(9, 1, 2000);
@@ -66,7 +66,7 @@ void SendAPRSPackets()
     POUTPUT(F("GEO Frequency "));
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
-    //SetOverrideFrequency(F14445);  // Frequency not used by any country
+    // SetOverrideFrequency(F14445);  // Frequency not used by any country
     print_debug(_BEACON, _POSITION_STATUS);
     send_packet(_BEACON, _POSITION_STATUS);
     delay(10000);
