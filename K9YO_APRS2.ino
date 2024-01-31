@@ -73,7 +73,7 @@ int altitude = 2000;
 
 void loop()
 {
-  POUTPUTLN(" Starting Loop ");
+  POUTPUTLN((" Starting Loop "));
  //int ifreq = F14445;
   {
     // i2cdetect();
@@ -81,6 +81,7 @@ void loop()
     //POUTPUTLN((ifreq));
     //transmit_test();
     SendAPRSPackets();
+    delay(30000);
 
   }
 }
