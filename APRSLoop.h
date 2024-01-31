@@ -2,13 +2,13 @@
 // Defines the Output Pin for the Voltage controlled oscillator
 #define VXCO_PIN 3 // SAMD21 pin
 
-// #include <si5351.h> // include this for QFN20
-#include "src/si5351-16QFN.h" // include this for QFN16
+#include <si5351.h> // include this for QFN20
+//#include "src/si5351-16QFN.h" // include this for QFN16
 #ifndef APRS_WSPR
 Si5351 si5351;
 #endif
-// #include "SI5351InterfaceVHF-20QFN.h"
-#include "SI5351InterfaceVHF-16QFN.h"
+#include "SI5351InterfaceVHF-20QFN.h"
+//#include "SI5351InterfaceVHF-16QFN.h"
 #include "geofence.h"
 
 #include "APRSFormat.h"

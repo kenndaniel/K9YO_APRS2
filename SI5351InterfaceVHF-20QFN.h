@@ -10,8 +10,6 @@
 #define XMIT_CLK0 SI5351_CLK2
 #define XMIT_CLK1 SI5351_CLK3
 
-
-
 enum APRSFreqs // world wide APRS frequencies
 {
   F14445,
@@ -188,7 +186,7 @@ void Set_frequency(APRSFreqs Frequency)
 {
 
   int num_reg = 8;
-  si5351b_revb_register_t APRSFreqRegisters[12][num_reg][2] =
+  si5351b_revb_register_t APRSFreqRegisters[12][num_reg] =
       // Register values for Clock 2 and 3(inverted)
       // 144.45 Picture Download and test frequency
       {
@@ -367,7 +365,7 @@ void SetOverrideFrequency(APRSFreqs freq)
 
 void VHF_off()
 { // turn the power off for clk2&3
-  xxuint8_t regStatus = si5351.si5351_write(0x0003, 0x0C);
+  uint8_t regStatus = si5351.si5351_write(0x0003, 0x0C);
 }
 
 void VHF_on()
