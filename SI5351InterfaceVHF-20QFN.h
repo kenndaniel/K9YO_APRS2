@@ -30,14 +30,14 @@ enum APRSFreqs // world wide APRS frequencies
 APRSFreqs GEOFENCE_Freq = F14445;
 unsigned long long GEOFENCE_APRS_frequency = 0;
 
-#ifndef APRS_WSPR
+
 typedef struct
 {
   unsigned int address; /* 16-bit register address */
   unsigned char value;  /* 8-bit register data */
 
 } si5351b_revb_register_t;
-#endif
+
 
 enum DriveAmp
 {

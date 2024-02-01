@@ -31,7 +31,7 @@ bool APRSBegin()
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
     APRSSensorInfoInit();
     // cpu Temp, Temp, pressure, number of satellites, year, month, day
-    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)year(), (int)month(), (int)day());
+    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)clock.getYear(), (int)clock.getMonth(), (int)clock.getDay());
 
     // Example of how to add a string of information to the data porting of a messate
 
@@ -49,7 +49,7 @@ bool APRSBegin()
     // course in deg clockwise from N, speed in knots, altitude in ft
 
     APRSSetCourseSpeedAltitude(gpsCourse, gpsSpeed * .5399, gpsAltitude * 3.28);
-    APRSFormatTime((int)hour(), (int)minute(), (int)second()); // hr min sec
+    APRSFormatTime((int)clock.getHours(), (int)clock.getMinutes(), (int)clock.getSeconds()); // hr min sec
     APRSLatLong(latitude, longitude);
     // Checks if it is ok to transmit in this location - If yes it GEOFENCE_Freq which sets the transmit frequency
     GEOFENCE_position(latitude, longitude);

@@ -47,8 +47,9 @@ float gpsAltitude = 10.;
 
 #include <Wire.h>
 //#include <i2cdetect.h>
-#include <TimeLib.h>
-
+//#include <TimeLib.h>
+#include <RTCZero.h>
+RTCZero clock;
 char loc6[7] ="EN62ag"; // Used only in status string -- not required
 #include "APRSLoop.h"
 
@@ -65,7 +66,8 @@ void setup()
  
   // Initialize the cpu time for testing
   // hr, min, sec, day, month, year
-    setTime( 8, 30, 45, 30, 30, 2023);
+    clock.setTime( 8, 30, 45);
+    clock.setDate( 30, 30, 2023);
 
 }
 
@@ -81,7 +83,7 @@ void loop()
     //POUTPUTLN((ifreq));
     //transmit_test();
     SendAPRSPackets();
-    delay(30000);
+    delay(60000*3);
 
   }
 }
