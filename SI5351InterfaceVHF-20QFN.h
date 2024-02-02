@@ -1,6 +1,5 @@
 /*
    Low level functions that perform the final message encoding and interface with the SI5351 Transmitter
-
  */
 
 // unsigned long long freqAPRSTest = APRS_DEBUG_FREQ;
