@@ -67,7 +67,7 @@ void setup()
   // Initialize the cpu time for testing
   // hr, min, sec, day, month, year
     clock.setTime( 8, 30, 45);
-    clock.setDate( 30, 30, 2023);
+    clock.setDate( 3, 30, 23);
 
 }
 
