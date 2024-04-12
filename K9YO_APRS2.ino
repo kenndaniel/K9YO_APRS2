@@ -90,7 +90,7 @@ void loop()
     //POUTPUTLN((" Frequency"));
     //POUTPUTLN((ifreq));
     //transmit_test();
-    SendAPRSPackets();
+    SendAPRSPacket(2);
     delay(60000*3);
 
   }
