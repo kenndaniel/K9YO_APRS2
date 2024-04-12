@@ -50,9 +50,18 @@ float gpsAltitude = 10.;
 #include <RTCZero.h>
 RTCZero clock;
 char loc6[7] ="EN62ag"; // Used only in status string -- not required
-#include "APRSLoop.h"
+
+// commont out the following functions if a sensor is provided
+float getPressure()
+{ return 250.;}
+float getTemperature()
+{ return -5.; }
+
+#include "./APRSLoop.h"
 
 const char *mycall = call;  // required
+
+
 
 void setup()
 {

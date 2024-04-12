@@ -25,13 +25,13 @@ to the APRS format.
 bool APRSBegin()
 {
     // Set status message
-    char status[] = "APRS Tracker by K9YO";
+    char status[] = "APRS Balloon Tracker by K9YO";
     APRSSetStatus(status);
 
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
     APRSSensorInfoInit();
     // cpu Temp, Temp, pressure, number of satellites, year, month, day
-    APRSSetSensorInfo(-5, -5.24, 250.23, 6, (int)clock.getYear(), (int)clock.getMonth(), (int)clock.getDay());
+    APRSSetSensorInfo(-5, getTemperature(), getPressure(), 6, (int)clock.getYear(), (int)clock.getMonth(), (int)clock.getDay());
 
     // Example of how to add a string of information to the data porting of a messate
 
@@ -59,7 +59,7 @@ bool APRSBegin()
     return true;
 }
 
-void SendAPRSPackets()
+void SendAPRSPacket(int msg)
 {
     // transmit_test();
     bool OK_to_transmit = APRSBegin();
@@ -71,25 +71,34 @@ void SendAPRSPackets()
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
     //     SetOverrideFrequency(F14445);  // Frequency not used by any country
-    // print_debug(_BEACON, _POSITION_STATUS);
-    // send_packet(_BEACON, _POSITION_STATUS);
+    if (msg == 0)
+    {   print_debug(_BEACON, _POSITION_STATUS);
+        send_packet(_BEACON, _POSITION_STATUS);
+    }
     //     SetOverrideFrequency(F14445);  // Frequency not used by any country
     // delay(10000);
-    // print_debug(_NORMAL, _POSITION_STATUS);
-    // send_packet(_NORMAL, _POSITION_STATUS);
+    if (msg == 1)
+    { print_debug(_NORMAL, _POSITION_STATUS);
+     send_packet(_NORMAL, _POSITION_STATUS);
+     }
     //     SetOverrideFrequency(F14445);  // Frequency not used by any country
     // delay(10000);
-    //Serial.print(" Free Memory is ");
-    //print_debug(_NORMAL, _STATUS);
-    //send_packet(_NORMAL, _STATUS);
+    if (msg == 2)
+    {    print_debug(_NORMAL, _STATUS);
+        send_packet(_NORMAL, _STATUS);
+    }
 
     //     SetOverrideFrequency(F14445);  // Frequency not used by any country
     // delay(15000);
-    // print_debug(_NORMAL, _DATA);
-    // send_packet(_NORMAL, _DATA);
+    if (msg == 3)
+    {    print_debug(_NORMAL, _DATA);
+        send_packet(_NORMAL, _DATA);
+    }
     // delay(10000);
-    print_debug(_BALLOON, _BALLOON);
-    send_packet(_BALLOON, _BALLOON);
+    if (msg == 4)
+    {    print_debug(_BALLOON, _BALLOON);
+        send_packet(_BALLOON, _BALLOON);
+    }
 }
 
 void transmit_test(void)
