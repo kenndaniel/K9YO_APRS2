@@ -67,6 +67,8 @@ void setup()
 {
   delay(7000);  // This is needed 
   Wire.begin();
+  delay(100);
+  Serial.begin(9600);
 
   set_io();
   POUTPUTLN((" Starting "));
@@ -89,7 +91,7 @@ void loop()
     // i2cdetect();
     //POUTPUTLN((" Frequency"));
     //POUTPUTLN((ifreq));
-    //transmit_test();
+    transmit_test();
     SendAPRSPacket(2);
     delay(60000*3);
 

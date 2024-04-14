@@ -71,7 +71,7 @@ char myssid = APRS_SID;
 
 
 const char *digi = "WIDE2";  // WIDE2-1 will only contact wide area repeaters
-char digissid = 1;
+char digissid = 2; //two hops  wide2-2
 const char sym_ovl = '/';
 char sym_tab = '\\';
 const char sym_space = ' ';
