@@ -104,10 +104,10 @@ void APRSSetSensorInfo(int iTxC, float fC, float fhPa, int iS, int iY, int iM, i
   siC = (String)(iTxC);
   int iC = fC;
   int idC = abs((fC - iC) * 100);
-  String sC = (String)iC + (String)p + (String)idC;
+  String sC = (String)iC + (String)p + (String)idC;  // limit to two digits
   int ihPa = fhPa;
   int idhPa = (fhPa - ihPa) * 100;
-  String shPa = (String)ihPa + (String)p + (String)idhPa;
+  String shPa = (String)ihPa + (String)p + (String)idhPa;  // limit to two digita
 
   sData = sp + (String)iTxC + TxC + sp + sC + C + sp + shPa + hPa + sp + (String)iS + S + sp + (String)iY + dash + (String)iM + dash + (String)iD;
   strncpy(APRSinfo, sData.c_str(), 100);
