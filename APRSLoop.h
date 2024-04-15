@@ -2,10 +2,10 @@
 // Defines the Output Pin for the Voltage controlled oscillator
 #define VXCO_PIN 3 // SAMD21 pin
 
-#include <si5351.h> // include this for QFN20
-//#include "src/si5351-16QFN.h" // include this for QFN16
-#ifndef APRS_WSPR
-Si5351 si5351;
+
+#ifndef APRS_WSPR  // If not defined -- defined when combined with wspr to eliminate duplicate si5351 objectys
+    #include <si5351.h> 
+    Si5351 si5351;
 #endif
 #include "SI5351InterfaceVHF-20QFN.h"
 //#include "SI5351InterfaceVHF-16QFN.h"
@@ -64,9 +64,13 @@ void SendAPRSPacket(int msg)
     // transmit_test();
     bool OK_to_transmit = APRSBegin();
     if (OK_to_transmit == false)
-        POUTPUTLN(F("APRS_Not_OK"));
+    {
+        POUTPUTLN(F("APRS_Not_OK for this location "));
+        return;
+    }
     else
-        POUTPUTLN(F("APRS is OK"));
+        POUTPUTLN(F("APRS is in an OK locaton "));
+
     POUTPUT(F("GEO Frequency "));
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 

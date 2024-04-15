@@ -57,9 +57,9 @@ float getPressure()
 float getTemperature()
 { return -5.; }
 
-#include "./APRSLoop.h"
-
 const char *mycall = call;  // required
+
+#include "APRSLoop.h"
 
 
 
