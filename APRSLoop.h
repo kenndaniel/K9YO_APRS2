@@ -7,7 +7,7 @@
     #include <si5351.h> 
     Si5351 si5351;
 #endif
-#include "SI5351InterfaceVHF-20QFN.h"
+#include "SI5351InterfaceVHF.h"
 //#include "SI5351InterfaceVHF-16QFN.h"
 #include "geofence.h"
 
@@ -37,20 +37,19 @@ bool APRSBegin()
 
     APRSDataInit('B'); // Third character in data string used to identify the type of body
     // Various different bodies can be sent by the tracker using different third characters
-    // Typocally this type of body is not displayed by aprs.fi.  It needs to be forwarded to an iGate
     for (int i = 0; i < 5; ++i)
     {
         // Build the data body with a comma delimited items
-        APRSDataAppendInt(i * 7);
-        APRSDataAppendChars(loc6);
+        APRSDataAppendInt(73+i);
+        APRSDataAppendChars(loc6); // loc6 is the 6 character grid square
         APRSDataAppendFloat(3.14159);
     }
 
-    // course in deg clockwise from N, speed in knots, altitude in ft
+    // course in deg clockwise from N, speed in knots, altitude in ft which is converted from the gps information
 
     APRSSetCourseSpeedAltitude(gpsCourse, gpsSpeed * .5399, gpsAltitude * 3.28);
     APRSFormatTime((int)clock.getHours(), (int)clock.getMinutes(), (int)clock.getSeconds()); // hr min sec
-    APRSLatLong(latitude, longitude);
+    APRSLatLong(latitude, longitude); // will convert to decimal degreees
     // Checks if it is ok to transmit in this location - If yes it GEOFENCE_Freq which sets the transmit frequency
     GEOFENCE_position(latitude, longitude);
     if (GEOFENCE_no_tx == APRS_Not_Ok)
@@ -109,7 +108,7 @@ void transmit_test(void)
 {
     POUTPUTLN(("Transmit Test"));
     APRSon();
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < 1000; ++i)
     {
         transmitAPRS(LOW);
         delay(500);

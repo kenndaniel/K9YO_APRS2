@@ -65,10 +65,14 @@ const char *mycall = call;  // required
 
 void setup()
 {
+
   delay(7000);  // This is needed 
   Wire.begin();
   delay(100);
   Serial.begin(9600);
+  #define RFPIN 5
+  pinMode(RFPIN, OUTPUT);
+  digitalWrite(RFPIN, HIGH);
 
   set_io();
   POUTPUTLN((" Starting "));
