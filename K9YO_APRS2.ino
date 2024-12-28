@@ -1,6 +1,10 @@
 /*
- *  Copyright (C) 2018 - Handiko Gesang - www.github.com/handiko
- *  Modified and adapted for ballooons by Ken Daniel - www.github.com/kenndaniel
+ *  
+ *  Ken Daniel - www.github.com/kenndaniel
+ *  Low level formatting of the signal was built upon the work of 
+ *  Handiko Gesang - https://github.com/handiko/Arduino-APRS
+ *  Geofensing was built upon the work of qrplabs  LightAPRS
+ *  https://github.com/lightaprs/LightAPRS-1.0/tree/master/libraries/LightAPRS_Geofence
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

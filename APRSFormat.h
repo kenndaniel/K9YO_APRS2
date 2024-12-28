@@ -145,13 +145,13 @@ void APRSSetCourseSpeedAltitude(float course, float speed, float altitude)
 char APRSdata[257];
 void APRSDataInit(char dtype)
 { // Initialize the APRSdata string with the data type in the first position
-
+  // Data type is a user defined character designating the type of data to follow
   APRSdata[0] = dtype;
   APRSdata[1] = '\0';
 }
 
 bool APRSDataAppendFloat(float value)
-{ // Append a char string to the end of the data string.
+{ // Append a comma and then float value to the end of the data string.
   String str = (String)value;
   str = (String)APRSdata + (String) "," + str;
   if (str.length() > 250)
@@ -161,7 +161,7 @@ bool APRSDataAppendFloat(float value)
 }
 
 bool APRSDataAppendInt(int value)
-{ // Append a char string to the end of the APRSdata string.
+{ // Append a comma and then the int to the end of the APRSdata string.
   String str = (String)value;
   str = (String)APRSdata + (String) "," + str;
   if (str.length() > 250)
@@ -171,7 +171,7 @@ bool APRSDataAppendInt(int value)
 }
 
 bool APRSDataAppendChars(char *value)
-{ // Append a char string to the end of the APRSdata string.
+{ // Append a comma and then the char string to the end of the APRSdata string.
   String str = (String)value;
   str = (String)APRSdata + (String) "," + str;
   if (str.length() > 250)
@@ -243,7 +243,8 @@ Sets the correct local APRS frequency
 Returns true if APRS can be legally transmitted at this location
 */
 void APRSLatLong(float latitude, float longitude)
-{
+{  // Converts the decimal degrees into a properly padded and formatted APRS position
+   // for use when the _POSITION argument is used.
 
   APRSDegMin(latitude, LATITUDE);
   APRSDegMin(longitude, LONGITUDE);

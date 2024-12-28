@@ -3,7 +3,8 @@
  * GEOFENCE.c
  *
  * Created: 5.11.2016 22:04:58
- *  Author: Tomy2
+ *  https://github.com/lightaprs/LightAPRS-1.0/tree/master/libraries/LightAPRS_Geofence
+ *  
  *  Modified Ken K9YO 3.8.2023
  */ 
 

@@ -33,13 +33,13 @@ bool APRSBegin()
     // cpu Temp, Temp, pressure, number of satellites, year, month, day
     APRSSetSensorInfo(-5, getTemperature(), getPressure(), 6, (int)clock.getYear(), (int)clock.getMonth(), (int)clock.getDay());
 
-    // Example of how to add a string of information to the data porting of a messate
+    // Example of how to add a string of information to the data
 
     APRSDataInit('B'); // Third character in data string used to identify the type of body
     // Various different bodies can be sent by the tracker using different third characters
     for (int i = 0; i < 5; ++i)
     {
-        // Build the data body with a comma delimited items
+        // Build the example data body with a comma delimited items
         APRSDataAppendInt(73+i);
         APRSDataAppendChars(loc6); // loc6 is the 6 character grid square
         APRSDataAppendFloat(3.14159);
