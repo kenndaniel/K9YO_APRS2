@@ -71,7 +71,9 @@ char myssid = APRS_SID;
 
 
 const char *digi = "WIDE2";  // WIDE2-1 will only contact wide area repeaters
-char digissid = 2; //two hops  wide2-2
+char digissid = 1; // Should be 1 for balloon above 3k feet (low altitude logic below)
+
+
 const char sym_ovl = '/';
 char sym_tab = '\\';
 const char sym_space = ' ';
@@ -237,6 +239,8 @@ void send_header(char msg_type)
     for (int j = 0; j < (6 - temp); j++)
       send_char_NRZI(' ' << 1, HIGH);
   }
+
+  if (gpsAltitude < 1500) digissid = 2; //two hops  wide2-2 at low altitude
   send_char_NRZI(((digissid + '0') << 1) + 1, HIGH);
 
   /***** CTRL FLD & PID *****/
