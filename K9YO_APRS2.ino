@@ -74,7 +74,7 @@ void setup()
   Wire.begin();
   delay(100);
   Serial.begin(9600);
-  #define RFPIN 5
+
   pinMode(RFPIN, OUTPUT);
   digitalWrite(RFPIN, HIGH);
 
@@ -82,7 +82,7 @@ void setup()
   POUTPUTLN((" Starting "));
   print_code_version();
  
-  // Initialize the cpu time for testing
+  // Initialize the cpu time for testing w/o gps
   // hr, min, sec, day, month, year
     clock.setTime( 8, 30, 45);
     clock.setDate( 3, 30, 23);
@@ -97,11 +97,17 @@ void loop()
  //int ifreq = F14445;
   {
     // i2cdetect();
-    //POUTPUTLN((" Frequency"));
+    POUTPUTLN((" Frequency"));
     //POUTPUTLN((ifreq));
-    transmit_test();
-    SendAPRSPacket(2);
-    delay(60000*3);
+    // override frequency 144.45 used for testing
+    //SetTestFrequency(TEST_FREQ);
+    //transmit_test();
+
+    SetTestFrequency(TEST_FREQ);
+    SendAPRSPacket(0);
+    //delay(10*60*1000);
+    delay(3000);
+    //delay(60*10*1000);
 
   }
 }

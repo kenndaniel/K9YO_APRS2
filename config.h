@@ -15,9 +15,6 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-// Reference txco frequency for SI5351
-#define SI5351_XTAL 27000000  
-//#define SI5351_XTAL 25000000
 
 const char call[] = "K9YO";     // Amateur callsign
 // 
@@ -26,4 +23,5 @@ const char call[] = "K9YO";     // Amateur callsign
 #define DEBUG // Debug output is generated if DEBUG is defined
 
 #define APRS_SID  6
-#define VCXO_GAIN 52 // 45 should be ok - Adjustment of the difference between the low and high tone frequencies 9-9.5MHz Critical
+#define RFPIN 5. // controls power to GPS and SI5351
+#define TEST_FREQ 144450000ULL  // Frequency in Hz
