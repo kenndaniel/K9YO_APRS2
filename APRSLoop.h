@@ -39,12 +39,13 @@ bool APRSBegin()
     // Various different bodies can be sent by the tracker using different third characters
     for (int i = 0; i < 5; ++i)
     {
-        // Build the example data body with a comma delimited items
+        // Build the example data body with a comma delimited items. Commas will be insertedd by the Append commands.
         APRSDataAppendInt(73+i);
         APRSDataAppendChars(loc6); // loc6 is the 6 character grid square
         APRSDataAppendFloat(3.14159);
     }
 
+    // Standard apra foramt for location and speed:
     // course in deg clockwise from N, speed in knots, altitude in ft which is converted from the gps information
 
     APRSSetCourseSpeedAltitude(gpsCourse, gpsSpeed * .5399, gpsAltitude * 3.28);
@@ -73,26 +74,19 @@ void SendAPRSPacket(int msg)
     POUTPUT(F("GEO Frequency "));
     POUTPUTLN(((int)(GEOFENCE_APRS_frequency / 1000)));
 
-    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
     if (msg == 0)
     {   print_debug(_BEACON, _POSITION_STATUS);
         send_packet(_BEACON, _POSITION_STATUS);
     }
-    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
-    // delay(10000);
     if (msg == 1)
     { print_debug(_NORMAL, _POSITION_STATUS);
      send_packet(_NORMAL, _POSITION_STATUS);
      }
-    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
-    // delay(10000);
     if (msg == 2)
     {    print_debug(_NORMAL, _STATUS);
         send_packet(_NORMAL, _STATUS);
     }
 
-    //     SetOverrideFrequency(F14445);  // Frequency not used by any country
-    // delay(15000);
     if (msg == 3)
     {    print_debug(_NORMAL, _DATA);
         send_packet(_NORMAL, _DATA);
@@ -111,9 +105,9 @@ void transmit_test(void)
     for (int i = 0; i < 1000; ++i)
     {
         transmitAPRS(LOW);
-        delay(500);
+        delay(50);
         transmitAPRS(HIGH);
-        delay(500);
+        delay(50);
     }
     APRSoff();
     delay(500);
