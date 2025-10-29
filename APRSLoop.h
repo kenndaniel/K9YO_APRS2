@@ -1,16 +1,15 @@
 
-// Defines the Output Pin for the Voltage controlled oscillator
-#define VXCO_PIN 3 // SAMD21 pin
 
 
 #ifndef APRS_WSPR  // If not defined -- defined when combined with wspr to eliminate duplicate si5351 objectys
     #include <si5351.h> 
     Si5351 si5351;
+    float getTempCPU()
+        {}
 #endif
-#include "SI5351InterfaceVHF.h"
-//#include "SI5351InterfaceVHF-16QFN.h"
-#include "geofence.h"
 
+#include "geofence.h"
+#include "SI5351InterfaceVHF.h"
 #include "APRSFormat.h"
 #include "APRSSendPkt.h"
 
@@ -31,7 +30,7 @@ bool APRSBegin()
     // Set data that will be automatically forwarded to Soundhub (Simulates qrplab APRS tracker)
     APRSSensorInfoInit();
     // cpu Temp, Temp, pressure, number of satellites, year, month, day
-    APRSSetSensorInfo(-5, getTemperature(), getPressure(), 6, (int)clock.getYear(), (int)clock.getMonth(), (int)clock.getDay());
+    APRSSetSensorInfo(-5, getTempCPU(), getPressure(), 6, (int)clock.getYear(), (int)clock.getMonth(), (int)clock.getDay());
 
     // Example of how to add a string of information to the data
 

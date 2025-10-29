@@ -25,6 +25,25 @@ int GEOFENCE_no_tx;
 
 #include "stdint.h"
 
+enum APRSFreqs // world wide APRS frequencies
+{
+  F14445,
+  F1448,
+  F14439,
+  F14501,
+  F145525,
+  F14557,
+  F14493,
+  F14464,
+  F14466,
+  F14462,
+  F145175,
+  F144575
+};
+
+// default test frequency
+APRSFreqs GEOFENCE_Freq = F14445;
+unsigned long long GEOFENCE_APRS_frequency = 0;  // set in GEOFENCE_position()
 
 // GEOFENCE ARRAYS (longitude, latitude)
 

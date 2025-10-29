@@ -99,11 +99,11 @@ void loop()
     // i2cdetect();
     POUTPUTLN((" Frequency"));
     //POUTPUTLN((ifreq));
-    // override frequency 144.45 used for testing
-    //SetTestFrequency(TEST_FREQ);
+    // test frequency 144.45 used for testing
+    //SetTestFrequency();
     //transmit_test();
 
-    SetTestFrequency(TEST_FREQ);
+    SetTestFrequency();
     SendAPRSPacket(0);
     //delay(10*60*1000);
     delay(3000);
